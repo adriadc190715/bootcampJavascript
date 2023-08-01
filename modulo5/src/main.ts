@@ -15,13 +15,14 @@ const muestraPuntuacion = () => {
 document.addEventListener("DOMContentLoaded", muestraPuntuacion);
 
 function dameCarta() {
-    const cartaAleatoria = Math.floor(Math.random() * 10);
+    const cartaAleatoria = Math.floor(Math.random() * 11);
 
     console.log(cartaAleatoria);
 
-    if (cartaAleatoria === 10 || cartaAleatoria === 11 || cartaAleatoria === 12) {
-        return 0.5;
+    if (cartaAleatoria===0){
+        return cartaAleatoria + 1;
     }
+
 
 
     if (cartaAleatoria > 7) {
@@ -34,6 +35,49 @@ function dameCarta() {
     return cartaAleatoria;
 }
 
+function valoresPuntos (carta:number): number {
+      let valorCarta : number;
+
+      switch (carta){
+        case 1:
+            valorCarta = 1;
+            break;
+        case 2:
+            valorCarta = 2;
+            break;
+        case 3:
+            valorCarta = 3;
+            break;
+        case 4:
+            valorCarta = 4;
+            break;
+        case 5:
+            valorCarta = 5;
+            break;
+        case 6:
+            valorCarta = 6;
+            break;
+        case 7:
+            valorCarta = 7;
+            break;
+        case 10:
+            valorCarta = 0.5;
+            break;
+        case 11:
+            valorCarta = 0.5;
+            break;
+        case 12:
+            valorCarta = 0.5;
+            break;
+        default:
+           console.error("No se encuentra valorCarta");
+           valorCarta=0;
+            break;
+
+      }
+      return valorCarta;
+
+};
 
 
 const mostrarCarta = (carta: number): void => {
@@ -95,7 +139,7 @@ function HandleClickDameCarta(){
         
     }
    
-    puntosPartida += cartaAleatorea;
+    puntosPartida +=  valoresPuntos(cartaAleatorea);
     muestraPuntuacion();
     mostrarCarta(cartaAleatorea);
     
@@ -104,5 +148,9 @@ function HandleClickDameCarta(){
 if(btnDameCarta!==null && btnDameCarta instanceof HTMLButtonElement){
     btnDameCarta.addEventListener("click",HandleClickDameCarta);
 }
+
+
+
+
 
 
