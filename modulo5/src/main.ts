@@ -230,18 +230,19 @@ if (btnMePlanto !== null && btnMePlanto instanceof HTMLButtonElement) {
   btnMePlanto.addEventListener("click", HandleClickMePlanto);
 }
 
+const HandleClicknuevaPartida = () =>{
+  puntosPartida = 0;
+  muestraPuntuacion();
+  mostrarCarta(0);
+  const elementoResultado = document.getElementById("resultado");
+  if (elementoResultado) {
+    elementoResultado.innerHTML = "";
+  }
+  habilitarBotones(true, true, false,false);}
+
 const btnNuevaPartida = document.getElementById("btnNuevaPartida");
 if (btnNuevaPartida !== null && btnNuevaPartida instanceof HTMLButtonElement) {
-  btnNuevaPartida.addEventListener("click", () => {
-    puntosPartida = 0;
-    muestraPuntuacion();
-    mostrarCarta(0);
-    const elementoResultado = document.getElementById("resultado");
-    if (elementoResultado) {
-      elementoResultado.innerHTML = "";
-    }
-    habilitarBotones(true, true, false,false);
-  });
+  btnNuevaPartida.addEventListener("click", HandleClicknuevaPartida)
 }
 
  
@@ -250,10 +251,12 @@ const siguienteCarta = () => {
     const puntosCarta = valoresPuntos(cartaAleatoria);
   
     puntosPartida += puntosCarta;
+   
   
     const estadoActual = comprobarEstadoPartida(puntosPartida);
+    
   
-    const mensaje = `Resultado de la siguiente carta:\n\nCarta Aleatoria: ${cartaAleatoria}\nPuntos de la Carta: ${puntosCarta}\nEstado de la Partida: ${estadoActual}`;
+    const mensaje = `Resultado de la siguiente carta:\n\nCarta Aleatoria: ${cartaAleatoria}\nPuntos de la Carta: ${puntosCarta}\n Suma obtenida: ${puntosPartida}\nEstado de la Partida: ${estadoActual}`;
   
     alert(mensaje);
   };
