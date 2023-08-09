@@ -45,25 +45,21 @@ const actualizarPuntuacion = (puntos: number) => {
   }
 };
 
-const comprobarEstadoPartida = (puntosTotales: number): Estado => {
-  if (puntosTotales < 7.5) {
-    return "SIGUE_JUGANDO";
-  } else if (puntosTotales === 7.5) {
-    return "WINER_HAS_GANADO";
-  } else {
-    return "GAME_OVER_TE_HAS_PASADO";
-  }
-};
+const comprobarEstadoPartida = (puntosTotales: number): Estado =>
+  puntosTotales < 7.5
+    ? "SIGUE_JUGANDO"
+    : puntosTotales === 7.5
+    ? "WINER_HAS_GANADO"
+    : "GAME_OVER_TE_HAS_PASADO";
 
-const gestionarPartida = (estado: Estado) => {
-    if (estado === "GAME_OVER_TE_HAS_PASADO") {
-      habilitarBotones(false, false, true, false);
-    } else if (estado ==="WINER_HAS_GANADO"){
-      habilitarBotones(false, false, true, false);
-    } else  if (estado ==="SIGUE_JUGANDO"){
-      habilitarBotones(true, true, false, false);
-    }
-  };
+    const gestionarPartida = (estado: Estado) => 
+    estado === "GAME_OVER_TE_HAS_PASADO"
+    ? habilitarBotones(false, false, true, false)
+    : estado === "WINER_HAS_GANADO"
+    ? habilitarBotones(false, false, true, false)
+    : estado === "SIGUE_JUGANDO"      
+    ? habilitarBotones(true, true, false, false)
+    :"Algo ha fallado";
 
 const habilitarBotones = (dameCarta: boolean, mePlanto: boolean, nuevaPartida: boolean, siguienteCarta : boolean) => {
   const btnDameCarta = document.getElementById("btnDameCarta");
@@ -72,17 +68,17 @@ const habilitarBotones = (dameCarta: boolean, mePlanto: boolean, nuevaPartida: b
   const btnsiguienteCarta = document.getElementById("btnsiguienteCarta");
   
 
-  if (btnDameCarta !== null && btnDameCarta instanceof HTMLButtonElement) {
+  if (btnDameCarta !== null && btnDameCarta !== undefined && btnDameCarta instanceof HTMLButtonElement) {
     btnDameCarta.disabled = !dameCarta;
   }
-  if (btnMePlanto !== null && btnMePlanto instanceof HTMLButtonElement) {
+  if (btnMePlanto !== null && btnMePlanto !== undefined &&  btnMePlanto instanceof HTMLButtonElement) {
     btnMePlanto.disabled = !mePlanto;
   }
-  if (btnNuevaPartida !== null && btnNuevaPartida instanceof HTMLButtonElement) {
+  if (btnNuevaPartida !== null &&  btnNuevaPartida !== undefined && btnNuevaPartida instanceof HTMLButtonElement) {
     btnNuevaPartida.classList.remove("hidden");
     btnNuevaPartida.style.display = nuevaPartida ? "inline-block" : "none";
   }
-  if (btnsiguienteCarta !== null && btnsiguienteCarta instanceof HTMLButtonElement) {
+  if (btnsiguienteCarta !== null && btnsiguienteCarta !== undefined && btnsiguienteCarta instanceof HTMLButtonElement) {
     btnsiguienteCarta.classList.remove("hidden");
     btnsiguienteCarta.style.display = siguienteCarta ? "inline-block" : "none";
   }
@@ -161,27 +157,23 @@ const mostrarCarta = (carta: number): void => {
 };
 
 const comprobarSuma = (suma: number): Estado => {
-  if (suma < 7.5) {
-    return "SIGUE_JUGANDO";
-  } else if (suma === 7.5) {
-    return "WINER_HAS_GANADO";
-  } else {
-    return "GAME_OVER_TE_HAS_PASADO";
-  }
+  return suma < 7.5
+    ? "SIGUE_JUGANDO"
+    : suma === 7.5
+    ? "WINER_HAS_GANADO"
+    : "GAME_OVER_TE_HAS_PASADO";
 };
 
 const mePlanto = (suma: number): string => {
-  if (suma < 4) {
-    return "Has sido muy conservador";
-  } else if (suma >= 4 && suma < 6) {
-    return "Te ha entrado el canguelo eh?";
-  } else if (suma >= 6 && suma < 7.5) {
-    return "Casi, casi.....";
-  } else if (suma === 7.5) {
-    return "Lo has clavado, Enhorabuena!";
-  } else {
-    return "Algo ha ido mal al plantarte";
-  }
+  return suma < 4
+    ? "Has sido muy conservador"
+    : suma >= 4 && suma < 6
+    ? "Te ha entrado el canguelo eh?"
+    : suma >= 6 && suma < 7.5
+    ? "Casi, casi....."
+    : suma === 7.5
+    ? "Lo has clavado, Enhorabuena!"
+    : "Algo ha ido mal al plantarte";
 };
 
 const HandleClickDameCarta = () => {
@@ -254,11 +246,10 @@ const siguienteCarta = () => {
    
   
     const estadoActual = comprobarEstadoPartida(puntosPartida);
+
+    muestraMensajeComprobacion(puntosPartida, estadoActual);
     
-  
-    const mensaje = `Resultado de la siguiente carta:\n\nCarta Aleatoria: ${cartaAleatoria}\nPuntos de la Carta: ${puntosCarta}\n Suma obtenida: ${puntosPartida}\nEstado de la Partida: ${estadoActual}`;
-  
-    alert(mensaje);
+    habilitarBotones(false, false, true,false);
   };
   
   const btnsiguienteCarta = document.getElementById("btnsiguienteCarta");
