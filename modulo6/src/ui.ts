@@ -1,26 +1,23 @@
 import {Estado,partida} from './modelo';
-import {textMensajeComprobacion,comprobarEstadoPartida,gestionarPartida,dameCarta,valoresPuntos,obtenerURLCarta,comprobarSuma,mePlanto} from './motor';
+import {textMensajeComprobacion,comprobarEstadoPartida,gestionarPartida,dameCarta,valoresPuntos,obtenerURLCarta,comprobarSuma} from './motor';
 
 export const muestraMensajeComprobacion = (puntosPartida: number, estado: Estado) => {
-    const mensajeCompleto: string = textMensajeComprobacion(puntosPartida, estado);
-    const elementoResultado = document.getElementById("resultado");
-    if (elementoResultado) {
-      elementoResultado.innerHTML = mensajeCompleto;
-    } else {
-      console.error("muestraMensajeComprobacion: No se ha encontrado el elemento con id resultado");
-    }
-  };
+  const mensajeCompleto: string = textMensajeComprobacion(puntosPartida, estado);
+  const elementoResultado = document.getElementById("resultado");
+  
+  elementoResultado
+    ? (elementoResultado.innerHTML = mensajeCompleto)
+    : console.error("muestraMensajeComprobacion: No se ha encontrado el elemento con id resultado");
+};
 
 export const muestraPuntuacion = () => {
-    const elementoPuntuacion = document.getElementById("puntuacion");
-    const textoPuntosTotales = "Puntos totales: ";
-    if (elementoPuntuacion) {
-      elementoPuntuacion.innerHTML = `${textoPuntosTotales} ${partida.puntosPartida}`;
-    } else {
-      console.error("elementoPuntuacion: No se ha encontrado el id puntuacion");
-    }
-  };
+  const elementoPuntuacion = document.getElementById("puntuacion");
+  const textoPuntosTotales = "Puntos totales: ";
 
+  elementoPuntuacion
+    ? (elementoPuntuacion.innerHTML = `${textoPuntosTotales} ${partida.puntosPartida}`)
+    : console.error("elementoPuntuacion: No se ha encontrado el id puntuacion");
+};
  export  const actualizarPuntuacion = (puntos: number) => {
     const puntuacionDiv = document.getElementById("puntuacion");
     if (puntuacionDiv !== null && puntuacionDiv instanceof HTMLElement) {
@@ -79,23 +76,9 @@ export const HandleClickDameCarta = () => {
 
  export  const HandleClickMePlanto = () => {
     const estadoActual = comprobarSuma(partida.puntosPartida);
-    const mensaje = mePlanto(partida.puntosPartida);
     muestraMensajeComprobacion(partida.puntosPartida, estadoActual);
     gestionarPartida(estadoActual);
-  
-    const puntuacionDiv = document.getElementById("resultado");
-    if (puntuacionDiv !== null && puntuacionDiv instanceof HTMLElement) {
-      puntuacionDiv.textContent = `Te has plantado con ${partida.puntosPartida}. ${mensaje}`;
-    }
-  
     habilitarBotones(false, false, true, true);
-    if (estadoActual === "GAME_OVER_TE_HAS_PASADO") {
-      const btnVerResultado = document.getElementById("btnVerResultado");
-      if (btnVerResultado !== null && btnVerResultado instanceof HTMLButtonElement) {
-        btnVerResultado.classList.remove("hidden");
-        btnVerResultado.style.display = "inline-block";
-      }
-    }
   };
 
  export  const HandleClicknuevaPartida = () =>{

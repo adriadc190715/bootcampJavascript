@@ -15,23 +15,27 @@ import {habilitarBotones,muestraMensajeComprobacion} from './ui';
     }
   };
 
+export   const comprobarEstadoPartida = (puntosTotales: number): Estado => {
+    if (puntosTotales < 7.5) {
+      return "SIGUE_JUGANDO";
+    } else if (puntosTotales === 7.5) {
+      return "WINER_HAS_GANADO";
+    } else {
+      return "GAME_OVER_TE_HAS_PASADO";
+    }
+  };
   
-export  const comprobarEstadoPartida = (puntosTotales: number): Estado =>
-puntosTotales < 7.5
-  ? "SIGUE_JUGANDO"
-  : puntosTotales === 7.5
-  ? "WINER_HAS_GANADO"
-  : "GAME_OVER_TE_HAS_PASADO";
-
-
- export const gestionarPartida = (estado: Estado) => 
-  estado === "GAME_OVER_TE_HAS_PASADO"
-  ? habilitarBotones(false, false, true, false)
-  : estado === "WINER_HAS_GANADO"
-  ? habilitarBotones(false, false, true, false)
-  : estado === "SIGUE_JUGANDO"      
-  ? habilitarBotones(true, true, false, false)
-  :"Algo ha fallado";
+export  const gestionarPartida = (estado: Estado) => {
+    if (estado === "GAME_OVER_TE_HAS_PASADO" )
+      habilitarBotones(false, false, true, false);
+    else if(estado === "WINER_HAS_GANADO") {
+      habilitarBotones(false, false, true, false);
+    } else if (estado === "SIGUE_JUGANDO") {
+      habilitarBotones(true, true, false, false);
+    } else {
+       console.error("Algo ha fallado");
+    }
+  };
 
   export function dameCarta() {
     const cartaAleatoria = Math.floor(Math.random() * 11);
@@ -95,25 +99,28 @@ export function valoresPuntos(carta: number): number {
   
     return `https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/${nombreImagen}`;
   };
-
- export const comprobarSuma = (suma: number): Estado => {
-    return suma < 7.5
-      ? "SIGUE_JUGANDO"
-      : suma === 7.5
-      ? "WINER_HAS_GANADO"
-      : "GAME_OVER_TE_HAS_PASADO";
+ export  const comprobarSuma = (suma: number): Estado => {
+    if (suma < 7.5) {
+      return "SIGUE_JUGANDO";
+    } else if (suma === 7.5) {
+      return "WINER_HAS_GANADO";
+    } else {
+      return "GAME_OVER_TE_HAS_PASADO";
+    }
   };
   
  export  const mePlanto = (suma: number): string => {
-    return suma < 4
-      ? "Has sido muy conservador"
-      : suma >= 4 && suma < 6
-      ? "Te ha entrado el canguelo eh?"
-      : suma >= 6 && suma < 7.5
-      ? "Casi, casi....."
-      : suma === 7.5
-      ? "Lo has clavado, Enhorabuena!"
-      : "Algo ha ido mal al plantarte";
+    if (suma < 4) {
+      return "Has sido muy conservador";
+    } else if (suma >= 4 && suma < 6) {
+      return "Te ha entrado el canguelo eh?";
+    } else if (suma >= 6 && suma < 7.5) {
+      return "Casi, casi.....";
+    } else if (suma === 7.5) {
+      return "Lo has clavado, Enhorabuena!";
+    } else {
+      return "Algo ha ido mal al plantarte";
+    }
   };
 
  export const siguienteCarta = () => {
