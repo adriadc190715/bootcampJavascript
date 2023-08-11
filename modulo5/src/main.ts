@@ -19,21 +19,19 @@ const textMensajeComprobacion = (puntosPartida: number, estado: Estado): string 
 const muestraMensajeComprobacion = (puntosPartida: number, estado: Estado) => {
   const mensajeCompleto: string = textMensajeComprobacion(puntosPartida, estado);
   const elementoResultado = document.getElementById("resultado");
-  if (elementoResultado) {
-    elementoResultado.innerHTML = mensajeCompleto;
-  } else {
-    console.error("muestraMensajeComprobacion: No se ha encontrado el elemento con id resultado");
-  }
+  
+  elementoResultado
+    ? (elementoResultado.innerHTML = mensajeCompleto)
+    : console.error("muestraMensajeComprobacion: No se ha encontrado el elemento con id resultado");
 };
 
 const muestraPuntuacion = () => {
   const elementoPuntuacion = document.getElementById("puntuacion");
   const textoPuntosTotales = "Puntos totales: ";
-  if (elementoPuntuacion) {
-    elementoPuntuacion.innerHTML = `${textoPuntosTotales} ${puntosPartida}`;
-  } else {
-    console.error("elementoPuntuacion: No se ha encontrado el id puntuacion");
-  }
+
+  elementoPuntuacion
+    ? (elementoPuntuacion.innerHTML = `${textoPuntosTotales} ${puntosPartida}`)
+    : console.error("elementoPuntuacion: No se ha encontrado el id puntuacion");
 };
 
 document.addEventListener("DOMContentLoaded", muestraPuntuacion);
@@ -45,21 +43,28 @@ const actualizarPuntuacion = (puntos: number) => {
   }
 };
 
-const comprobarEstadoPartida = (puntosTotales: number): Estado =>
-  puntosTotales < 7.5
-    ? "SIGUE_JUGANDO"
-    : puntosTotales === 7.5
-    ? "WINER_HAS_GANADO"
-    : "GAME_OVER_TE_HAS_PASADO";
+const comprobarEstadoPartida = (puntosTotales: number): Estado => {
+  if (puntosTotales < 7.5) {
+    return "SIGUE_JUGANDO";
+  } else if (puntosTotales === 7.5) {
+    return "WINER_HAS_GANADO";
+  } else {
+    return "GAME_OVER_TE_HAS_PASADO";
+  }
+};
 
-    const gestionarPartida = (estado: Estado) => 
-    estado === "GAME_OVER_TE_HAS_PASADO"
-    ? habilitarBotones(false, false, true, false)
-    : estado === "WINER_HAS_GANADO"
-    ? habilitarBotones(false, false, true, false)
-    : estado === "SIGUE_JUGANDO"      
-    ? habilitarBotones(true, true, false, false)
-    :"Algo ha fallado";
+const gestionarPartida = (estado: Estado) => {
+  if (estado === "GAME_OVER_TE_HAS_PASADO" )
+    habilitarBotones(false, false, true, false);
+  else if(estado === "WINER_HAS_GANADO") {
+    habilitarBotones(false, false, true, false);
+  } else if (estado === "SIGUE_JUGANDO") {
+    habilitarBotones(true, true, false, false);
+  } else {
+     console.error("Algo ha fallado");
+  }
+};
+
 
 const habilitarBotones = (dameCarta: boolean, mePlanto: boolean, nuevaPartida: boolean, siguienteCarta : boolean) => {
   const btnDameCarta = document.getElementById("btnDameCarta");
@@ -157,23 +162,27 @@ const mostrarCarta = (carta: number): void => {
 };
 
 const comprobarSuma = (suma: number): Estado => {
-  return suma < 7.5
-    ? "SIGUE_JUGANDO"
-    : suma === 7.5
-    ? "WINER_HAS_GANADO"
-    : "GAME_OVER_TE_HAS_PASADO";
+  if (suma < 7.5) {
+    return "SIGUE_JUGANDO";
+  } else if (suma === 7.5) {
+    return "WINER_HAS_GANADO";
+  } else {
+    return "GAME_OVER_TE_HAS_PASADO";
+  }
 };
 
 const mePlanto = (suma: number): string => {
-  return suma < 4
-    ? "Has sido muy conservador"
-    : suma >= 4 && suma < 6
-    ? "Te ha entrado el canguelo eh?"
-    : suma >= 6 && suma < 7.5
-    ? "Casi, casi....."
-    : suma === 7.5
-    ? "Lo has clavado, Enhorabuena!"
-    : "Algo ha ido mal al plantarte";
+  if (suma < 4) {
+    return "Has sido muy conservador";
+  } else if (suma >= 4 && suma < 6) {
+    return "Te ha entrado el canguelo eh?";
+  } else if (suma >= 6 && suma < 7.5) {
+    return "Casi, casi.....";
+  } else if (suma === 7.5) {
+    return "Lo has clavado, Enhorabuena!";
+  } else {
+    return "Algo ha ido mal al plantarte";
+  }
 };
 
 const HandleClickDameCarta = () => {
@@ -198,23 +207,10 @@ if (btnDameCarta !== null && btnDameCarta instanceof HTMLButtonElement) {
 
 const HandleClickMePlanto = () => {
   const estadoActual = comprobarSuma(puntosPartida);
-  const mensaje = mePlanto(puntosPartida);
   muestraMensajeComprobacion(puntosPartida, estadoActual);
   gestionarPartida(estadoActual);
-
-  const puntuacionDiv = document.getElementById("resultado");
-  if (puntuacionDiv !== null && puntuacionDiv instanceof HTMLElement) {
-    puntuacionDiv.textContent = `Te has plantado con ${puntosPartida}. ${mensaje}`;
-  }
-
   habilitarBotones(false, false, true, true);
-  if (estadoActual === "GAME_OVER_TE_HAS_PASADO") {
-    const btnVerResultado = document.getElementById("btnVerResultado");
-    if (btnVerResultado !== null && btnVerResultado instanceof HTMLButtonElement) {
-      btnVerResultado.classList.remove("hidden");
-      btnVerResultado.style.display = "inline-block";
-    }
-  }
+  
 };
 
 const btnMePlanto = document.getElementById("btnMePlanto");
