@@ -19,20 +19,26 @@ const textMensajeComprobacion = (puntosPartida: number, estado: Estado): string 
 const muestraMensajeComprobacion = (puntosPartida: number, estado: Estado) => {
   const mensajeCompleto: string = textMensajeComprobacion(puntosPartida, estado);
   const elementoResultado = document.getElementById("resultado");
-  
-  elementoResultado
-    ? (elementoResultado.innerHTML = mensajeCompleto)
-    : console.error("muestraMensajeComprobacion: No se ha encontrado el elemento con id resultado");
-};
+  if (elementoResultado !== null && elementoResultado instanceof HTMLElement) {
+       elementoResultado.innerHTML= mensajeCompleto;}
+       else {
+        console.error("muestraMensajeComprobacion: No se ha encontrado el elemento con id resultado");
+       }
+  };
 
+  
 const muestraPuntuacion = () => {
   const elementoPuntuacion = document.getElementById("puntuacion");
   const textoPuntosTotales = "Puntos totales: ";
-
-  elementoPuntuacion
-    ? (elementoPuntuacion.innerHTML = `${textoPuntosTotales} ${puntosPartida}`)
-    : console.error("elementoPuntuacion: No se ha encontrado el id puntuacion");
+  if (elementoPuntuacion !== null && elementoPuntuacion instanceof HTMLElement) {
+     elementoPuntuacion.innerHTML = `${textoPuntosTotales} ${puntosPartida}`}
+     else{
+      console.error("elementoPuntuacion: No se ha encontrado el id puntuacion");
+     }
 };
+
+
+
 
 document.addEventListener("DOMContentLoaded", muestraPuntuacion);
 
@@ -90,8 +96,12 @@ const habilitarBotones = (dameCarta: boolean, mePlanto: boolean, nuevaPartida: b
 
 };
 
+function generarNumeroRandom() {
+  return Math.floor(Math.random() * 11);
+}
+
 function dameCarta() {
-  const cartaAleatoria = Math.floor(Math.random() * 11);
+  const cartaAleatoria =  generarNumeroRandom();
 
   console.log(cartaAleatoria);
 
@@ -239,6 +249,7 @@ const siguienteCarta = () => {
     const puntosCarta = valoresPuntos(cartaAleatoria);
   
     puntosPartida += puntosCarta;
+    mostrarCarta(cartaAleatoria);
    
   
     const estadoActual = comprobarEstadoPartida(puntosPartida);
