@@ -1,5 +1,5 @@
 import {Estado,partida} from './modelo';
-import {habilitarBotones,muestraMensajeComprobacion} from './ui';
+import {habilitarBotones,muestraMensajeComprobacion,mostrarCarta} from './ui';
 
 
  export const textMensajeComprobacion = (puntosPartida: number, estado: Estado): string => {
@@ -37,8 +37,12 @@ export  const gestionarPartida = (estado: Estado) => {
     }
   };
 
+   function generarNumeroRandom() {
+    return Math.floor(Math.random() * 11);
+  }
+
   export function dameCarta() {
-    const cartaAleatoria = Math.floor(Math.random() * 11);
+    const cartaAleatoria =  generarNumeroRandom();
   
     console.log(cartaAleatoria);
   
@@ -128,6 +132,7 @@ export function valoresPuntos(carta: number): number {
     const puntosCarta = valoresPuntos(cartaAleatoria);
   
     partida.puntosPartida += puntosCarta;
+    mostrarCarta(cartaAleatoria);
    
   
     const estadoActual = comprobarEstadoPartida(partida.puntosPartida);

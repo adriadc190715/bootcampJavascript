@@ -4,19 +4,24 @@ import {textMensajeComprobacion,comprobarEstadoPartida,gestionarPartida,dameCart
 export const muestraMensajeComprobacion = (puntosPartida: number, estado: Estado) => {
   const mensajeCompleto: string = textMensajeComprobacion(puntosPartida, estado);
   const elementoResultado = document.getElementById("resultado");
-  
-  elementoResultado
-    ? (elementoResultado.innerHTML = mensajeCompleto)
-    : console.error("muestraMensajeComprobacion: No se ha encontrado el elemento con id resultado");
+  if (elementoResultado !== null && elementoResultado instanceof HTMLElement) {
+    elementoResultado.innerHTML= mensajeCompleto;}
+    else {
+     console.error("muestraMensajeComprobacion: No se ha encontrado el elemento con id resultado");
+    }
 };
+  
 
 export const muestraPuntuacion = () => {
   const elementoPuntuacion = document.getElementById("puntuacion");
   const textoPuntosTotales = "Puntos totales: ";
+  if (elementoPuntuacion !== null && elementoPuntuacion instanceof HTMLElement) {
+    elementoPuntuacion.innerHTML = `${textoPuntosTotales} ${partida.puntosPartida}`}
+    else{
+     console.error("elementoPuntuacion: No se ha encontrado el id puntuacion");
+    }
 
-  elementoPuntuacion
-    ? (elementoPuntuacion.innerHTML = `${textoPuntosTotales} ${partida.puntosPartida}`)
-    : console.error("elementoPuntuacion: No se ha encontrado el id puntuacion");
+  
 };
  export  const actualizarPuntuacion = (puntos: number) => {
     const puntuacionDiv = document.getElementById("puntuacion");
