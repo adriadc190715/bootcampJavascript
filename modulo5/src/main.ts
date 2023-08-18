@@ -96,12 +96,12 @@ const habilitarBotones = (dameCarta: boolean, mePlanto: boolean, nuevaPartida: b
 
 };
 
-function generarNumeroRandom() {
+function generarNumeroRandom():number {
   return Math.floor(Math.random() * 11);
 }
 
-function dameCarta() {
-  const cartaAleatoria =  generarNumeroRandom();
+function dameCarta(numeroRandom: number) : number {
+  let  cartaAleatoria = numeroRandom;
 
   console.log(cartaAleatoria);
 
@@ -196,16 +196,14 @@ const mePlanto = (suma: number): string => {
 };
 
 const HandleClickDameCarta = () => {
-  const cartaAleatoria = dameCarta();
+  const numeroRandom = generarNumeroRandom();
+  const cartaAleatoria = dameCarta(numeroRandom);
   const puntosCarta = valoresPuntos(cartaAleatoria);
-
-  actualizarPuntuacion(cartaAleatoria);
+  const estadoActual = comprobarEstadoPartida(puntosPartida);
 
   puntosPartida += puntosCarta;
   muestraPuntuacion();
   mostrarCarta(cartaAleatoria);
-
-  const estadoActual = comprobarEstadoPartida(puntosPartida);
   muestraMensajeComprobacion(puntosPartida, estadoActual);
   gestionarPartida(estadoActual);
 };
@@ -213,7 +211,7 @@ const HandleClickDameCarta = () => {
 const btnDameCarta = document.getElementById("btnDameCarta");
 if (btnDameCarta !== null && btnDameCarta instanceof HTMLButtonElement) {
   btnDameCarta.addEventListener("click", HandleClickDameCarta);
-}
+};
 
 const HandleClickMePlanto = () => {
   const estadoActual = comprobarSuma(puntosPartida);
@@ -227,35 +225,38 @@ const btnMePlanto = document.getElementById("btnMePlanto");
 if (btnMePlanto !== null && btnMePlanto instanceof HTMLButtonElement) {
   btnMePlanto.addEventListener("click", HandleClickMePlanto);
 }
+const actualizarElementoResultado = () =>{
+  const elementoResultado = document.getElementById("resultado");
+if (elementoResultado) {
+  elementoResultado.innerHTML = "";
+}
+
+};
+
 
 const HandleClicknuevaPartida = () =>{
   puntosPartida = 0;
   muestraPuntuacion();
   mostrarCarta(0);
-  const elementoResultado = document.getElementById("resultado");
-  if (elementoResultado) {
-    elementoResultado.innerHTML = "";
-  }
-  habilitarBotones(true, true, false,false);}
+  actualizarElementoResultado();
+  habilitarBotones(true, true, false,false);
+};
 
 const btnNuevaPartida = document.getElementById("btnNuevaPartida");
 if (btnNuevaPartida !== null && btnNuevaPartida instanceof HTMLButtonElement) {
   btnNuevaPartida.addEventListener("click", HandleClicknuevaPartida)
-}
+};
 
  
 const siguienteCarta = () => {
-    const cartaAleatoria = dameCarta();
+    const cartaAleatoria = generarNumeroRandom();
     const puntosCarta = valoresPuntos(cartaAleatoria);
-  
-    puntosPartida += puntosCarta;
-    mostrarCarta(cartaAleatoria);
-   
-  
     const estadoActual = comprobarEstadoPartida(puntosPartida);
 
+    puntosPartida += puntosCarta;
+    mostrarCarta(cartaAleatoria);
+    muestraPuntuacion();
     muestraMensajeComprobacion(puntosPartida, estadoActual);
-    
     habilitarBotones(false, false, true,false);
   };
   
@@ -264,5 +265,6 @@ const siguienteCarta = () => {
     btnsiguienteCarta.addEventListener("click", () => {
       siguienteCarta();
     });
-  }
+
+  };
   
