@@ -1,8 +1,8 @@
-import {Estado,partida} from './modelo';
-import {habilitarBotones,muestraMensajeComprobacion,mostrarCarta} from './ui';
+import {Estado,partida} from './modelo'
+import {habilitarBotones,muestraMensajeComprobacion,muestraPuntuacion,mostrarCarta,
+actualizarElementoResultado} from './ui';
 
-
- export const textMensajeComprobacion = (puntosPartida: number, estado: Estado): string => {
+export const textMensajeComprobacion = (puntosPartida: number, estado: Estado): string => {
     switch (estado) {
       case "SIGUE_JUGANDO":
         return `${puntosPartida} no has llegado, prueba otra vez`;
@@ -15,7 +15,7 @@ import {habilitarBotones,muestraMensajeComprobacion,mostrarCarta} from './ui';
     }
   };
 
-export   const comprobarEstadoPartida = (puntosTotales: number): Estado => {
+  export const comprobarEstadoPartida = (puntosTotales: number): Estado => {
     if (puntosTotales < 7.5) {
       return "SIGUE_JUGANDO";
     } else if (puntosTotales === 7.5) {
@@ -24,8 +24,8 @@ export   const comprobarEstadoPartida = (puntosTotales: number): Estado => {
       return "GAME_OVER_TE_HAS_PASADO";
     }
   };
-  
-export  const gestionarPartida = (estado: Estado) => {
+
+  export const gestionarPartida = (estado: Estado) => {
     if (estado === "GAME_OVER_TE_HAS_PASADO" )
       habilitarBotones(false, false, true, false);
     else if(estado === "WINER_HAS_GANADO") {
@@ -37,12 +37,12 @@ export  const gestionarPartida = (estado: Estado) => {
     }
   };
 
-   function generarNumeroRandom() {
+  export function generarNumeroRandom():number {
     return Math.floor(Math.random() * 11);
   }
-
-  export function dameCarta() {
-    const cartaAleatoria =  generarNumeroRandom();
+  
+ export function dameCarta(numeroRandom: number) : number {
+    let  cartaAleatoria = numeroRandom;
   
     console.log(cartaAleatoria);
   
@@ -55,14 +55,15 @@ export  const gestionarPartida = (estado: Estado) => {
     }
     return cartaAleatoria;
   }
+
   
-export function valoresPuntos(carta: number): number {
+ export function valoresPuntos(carta: number): number {
     const valorCarta: number = carta <= 7 ? carta : 0.5;
   
     return valorCarta;
   }
   
- export  const obtenerURLCarta = (carta: number): string => {
+ export const obtenerURLCarta = (carta: number): string => {
     let nombreImagen: string;
   
     switch (carta) {
@@ -103,7 +104,8 @@ export function valoresPuntos(carta: number): number {
   
     return `https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/${nombreImagen}`;
   };
- export  const comprobarSuma = (suma: number): Estado => {
+
+  export const comprobarSuma = (suma: number): Estado => {
     if (suma < 7.5) {
       return "SIGUE_JUGANDO";
     } else if (suma === 7.5) {
@@ -113,7 +115,7 @@ export function valoresPuntos(carta: number): number {
     }
   };
   
- export  const mePlanto = (suma: number): string => {
+  export const mePlanto = (suma: number): string => {
     if (suma < 4) {
       return "Has sido muy conservador";
     } else if (suma >= 4 && suma < 6) {
@@ -127,17 +129,46 @@ export function valoresPuntos(carta: number): number {
     }
   };
 
- export const siguienteCarta = () => {
-    const cartaAleatoria = dameCarta();
+  export const HandleClickDameCarta = () => {
+    const numeroRandom = generarNumeroRandom();
+    const cartaAleatoria = dameCarta(numeroRandom);
     const puntosCarta = valoresPuntos(cartaAleatoria);
+    
   
     partida.puntosPartida += puntosCarta;
+    muestraPuntuacion();
     mostrarCarta(cartaAleatoria);
-   
-  
+    const estadoActual = comprobarEstadoPartida(partida.puntosPartida);
+    muestraMensajeComprobacion(partida.puntosPartida, estadoActual);
+    gestionarPartida(estadoActual);
+  };
+
+  export const HandleClickMePlanto = () => {
+    const estadoActual = comprobarSuma(partida.puntosPartida);
+    muestraMensajeComprobacion(partida.puntosPartida, estadoActual);
+    gestionarPartida(estadoActual);
+    habilitarBotones(false, false, true, true);
+    
+  };
+
+  export const HandleClicknuevaPartida = () =>{
+    partida.puntosPartida = 0;
+    muestraPuntuacion();
+    mostrarCarta(0);
+    actualizarElementoResultado();
+    habilitarBotones(true, true, false,false);
+  };
+
+  export const siguienteCarta = () => {
+    const cartaAleatoria = generarNumeroRandom();
+    const puntosCarta = valoresPuntos(cartaAleatoria);
+    
+    partida.puntosPartida += puntosCarta;
+    mostrarCarta(cartaAleatoria);
+    muestraPuntuacion();
+
     const estadoActual = comprobarEstadoPartida(partida.puntosPartida);
 
     muestraMensajeComprobacion(partida.puntosPartida, estadoActual);
-    
     habilitarBotones(false, false, true,false);
   };
