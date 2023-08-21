@@ -19,7 +19,7 @@ const textMensajeComprobacion = (puntosPartida: number, estado: Estado): string 
 const muestraMensajeComprobacion = (puntosPartida: number, estado: Estado) => {
   const mensajeCompleto: string = textMensajeComprobacion(puntosPartida, estado);
   const elementoResultado = document.getElementById("resultado");
-  if (elementoResultado !== null && elementoResultado instanceof HTMLElement) {
+  if (elementoResultado !== null && elementoResultado !== undefined && elementoResultado instanceof HTMLElement) {
        elementoResultado.innerHTML= mensajeCompleto;}
        else {
         console.error("muestraMensajeComprobacion: No se ha encontrado el elemento con id resultado");
@@ -30,7 +30,7 @@ const muestraMensajeComprobacion = (puntosPartida: number, estado: Estado) => {
 const muestraPuntuacion = () => {
   const elementoPuntuacion = document.getElementById("puntuacion");
   const textoPuntosTotales = "Puntos totales: ";
-  if (elementoPuntuacion !== null && elementoPuntuacion instanceof HTMLElement) {
+  if (elementoPuntuacion !== null && elementoPuntuacion !== undefined && elementoPuntuacion instanceof HTMLElement) {
      elementoPuntuacion.innerHTML = `${textoPuntosTotales} ${puntosPartida}`}
      else{
       console.error("elementoPuntuacion: No se ha encontrado el id puntuacion");
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", muestraPuntuacion);
 
 const actualizarPuntuacion = (puntos: number) => {
   const puntuacionDiv = document.getElementById("puntuacion");
-  if (puntuacionDiv !== null && puntuacionDiv instanceof HTMLElement) {
+  if (puntuacionDiv !== null &&  puntuacionDiv !== undefined && puntuacionDiv instanceof HTMLElement) {
     puntuacionDiv.textContent = `Carta Obtenida: ${puntos}`;
   }
 };
@@ -195,7 +195,7 @@ const mePlanto = (suma: number): string => {
   }
 };
 
-const HandleClickDameCarta = () => {
+const handleClickDameCarta = () => {
   const numeroRandom = generarNumeroRandom();
   const cartaAleatoria = dameCarta(numeroRandom);
   const puntosCarta = valoresPuntos(cartaAleatoria);
@@ -208,11 +208,11 @@ const HandleClickDameCarta = () => {
 };
 
 const btnDameCarta = document.getElementById("btnDameCarta");
-if (btnDameCarta !== null && btnDameCarta instanceof HTMLButtonElement) {
-  btnDameCarta.addEventListener("click", HandleClickDameCarta);
+if (btnDameCarta !== null && btnDameCarta !== undefined && btnDameCarta instanceof HTMLButtonElement) {
+  btnDameCarta.addEventListener("click", handleClickDameCarta);
 };
 
-const HandleClickMePlanto = () => {
+const handleClickMePlanto = () => {
   const estadoActual = comprobarSuma(puntosPartida);
   muestraMensajeComprobacion(puntosPartida, estadoActual);
   gestionarPartida(estadoActual);
@@ -221,8 +221,8 @@ const HandleClickMePlanto = () => {
 };
 
 const btnMePlanto = document.getElementById("btnMePlanto");
-if (btnMePlanto !== null && btnMePlanto instanceof HTMLButtonElement) {
-  btnMePlanto.addEventListener("click", HandleClickMePlanto);
+if (btnMePlanto !== null && btnMePlanto !== undefined && btnMePlanto instanceof HTMLButtonElement) {
+  btnMePlanto.addEventListener("click", handleClickMePlanto);
 }
 const actualizarElementoResultado = () =>{
   const elementoResultado = document.getElementById("resultado");
@@ -232,7 +232,7 @@ if (elementoResultado) {
 
 }
 
-const HandleClicknuevaPartida = () =>{
+const handleClicknuevaPartida = () =>{
   puntosPartida = 0;
   muestraPuntuacion();
   mostrarCarta(0);
@@ -241,8 +241,8 @@ const HandleClicknuevaPartida = () =>{
 };
 
 const btnNuevaPartida = document.getElementById("btnNuevaPartida");
-if (btnNuevaPartida !== null && btnNuevaPartida instanceof HTMLButtonElement) {
-  btnNuevaPartida.addEventListener("click", HandleClicknuevaPartida)
+if (btnNuevaPartida !== null && btnNuevaPartida !== undefined && btnNuevaPartida instanceof HTMLButtonElement) {
+  btnNuevaPartida.addEventListener("click", handleClicknuevaPartida)
 };
 
  
@@ -261,7 +261,7 @@ const siguienteCarta = () => {
   };
   
   const btnsiguienteCarta = document.getElementById("btnsiguienteCarta");
-  if (btnsiguienteCarta !== null && btnsiguienteCarta instanceof HTMLButtonElement) {
+  if (btnsiguienteCarta !== null && btnsiguienteCarta !== undefined && btnsiguienteCarta instanceof HTMLButtonElement) {
     btnsiguienteCarta.addEventListener("click", () => {
       siguienteCarta();
     });
