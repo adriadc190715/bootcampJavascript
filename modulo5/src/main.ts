@@ -199,11 +199,10 @@ const HandleClickDameCarta = () => {
   const numeroRandom = generarNumeroRandom();
   const cartaAleatoria = dameCarta(numeroRandom);
   const puntosCarta = valoresPuntos(cartaAleatoria);
-  const estadoActual = comprobarEstadoPartida(puntosPartida);
-
   puntosPartida += puntosCarta;
   muestraPuntuacion();
   mostrarCarta(cartaAleatoria);
+  const estadoActual = comprobarEstadoPartida(puntosPartida);
   muestraMensajeComprobacion(puntosPartida, estadoActual);
   gestionarPartida(estadoActual);
 };
@@ -231,8 +230,7 @@ if (elementoResultado) {
   elementoResultado.innerHTML = "";
 }
 
-};
-
+}
 
 const HandleClicknuevaPartida = () =>{
   puntosPartida = 0;
@@ -251,11 +249,13 @@ if (btnNuevaPartida !== null && btnNuevaPartida instanceof HTMLButtonElement) {
 const siguienteCarta = () => {
     const cartaAleatoria = generarNumeroRandom();
     const puntosCarta = valoresPuntos(cartaAleatoria);
-    const estadoActual = comprobarEstadoPartida(puntosPartida);
-
+    
     puntosPartida += puntosCarta;
     mostrarCarta(cartaAleatoria);
     muestraPuntuacion();
+
+    const estadoActual = comprobarEstadoPartida(puntosPartida);
+
     muestraMensajeComprobacion(puntosPartida, estadoActual);
     habilitarBotones(false, false, true,false);
   };
