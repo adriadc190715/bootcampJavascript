@@ -1,4 +1,4 @@
-import {textMensajeComprobacion,obtenerURLCarta} from './motor';
+import {textMensajeComprobacion,generarNumeroRandom,comprobarEstadoPartida,comprobarSuma,valoresPuntos,dameCarta} from './motor';
 import {Estado,partida} from './modelo';
 
 export const iniciarPartida = () =>{
@@ -74,5 +74,106 @@ export const habilitarBotones = (dameCarta: boolean, mePlanto: boolean, nuevaPar
       if (elementoResultado) {
         elementoResultado.innerHTML = "";
       }
-      
       }
+
+      export const gestionarPartida = (estado: Estado) => {
+        if (estado === "GAME_OVER_TE_HAS_PASADO" )
+          habilitarBotones(false, false, true, false);
+        else if(estado === "WINER_HAS_GANADO") {
+          habilitarBotones(false, false, true, false);
+        } else if (estado === "SIGUE_JUGANDO") {
+          habilitarBotones(true, true, false, false);
+        } else {
+           console.error("Algo ha fallado");
+        }
+      };
+      
+      
+
+       
+ const obtenerURLCarta = (carta: number): string => {
+  let nombreImagen: string;
+
+  switch (carta) {
+    case 1:
+      nombreImagen = "copas/1_as-copas.jpg";
+      break;
+    case 2:
+      nombreImagen = "copas/2_dos-copas.jpg";
+      break;
+    case 3:
+      nombreImagen = "copas/3_tres-copas.jpg";
+      break;
+    case 4:
+      nombreImagen = "copas/4_cuatro-copas.jpg";
+      break;
+    case 5:
+      nombreImagen = "copas/5_cinco-copas.jpg";
+      break;
+    case 6:
+      nombreImagen = "copas/6_seis-copas.jpg";
+      break;
+    case 7:
+      nombreImagen = "copas/7_siete-copas.jpg";
+      break;
+    case 10:
+      nombreImagen = "copas/10_sota-copas.jpg";
+      break;
+    case 11:
+      nombreImagen = "copas/11_caballo-copas.jpg";
+      break;
+    case 12:
+      nombreImagen = "copas/12_rey-copas.jpg";
+      break;
+    default:
+      nombreImagen = "back.jpg";
+      break;
+  }
+
+  return `https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/${nombreImagen}`;
+};
+
+
+      export const handleClickDameCarta = () => {
+        const numeroRandom = generarNumeroRandom();
+        const cartaAleatoria = dameCarta(numeroRandom);
+        const puntosCarta = valoresPuntos(cartaAleatoria);
+        
+      
+        partida.puntosPartida += puntosCarta;
+        muestraPuntuacion();
+        mostrarCarta(cartaAleatoria);
+        const estadoActual = comprobarEstadoPartida(partida.puntosPartida);
+        muestraMensajeComprobacion(partida.puntosPartida, estadoActual);
+        gestionarPartida(estadoActual);
+      };
+    
+      export const handleClickMePlanto = () => {
+        const estadoActual = comprobarSuma(partida.puntosPartida);
+        muestraMensajeComprobacion(partida.puntosPartida, estadoActual);
+        gestionarPartida(estadoActual);
+        habilitarBotones(false, false, true, true);
+        
+      };
+    
+      export const handleClicknuevaPartida = () =>{
+        partida.puntosPartida = 0;
+        muestraPuntuacion();
+        mostrarCarta(0);
+        actualizarElementoResultado();
+        habilitarBotones(true, true, false,false);
+      };
+    
+      export const siguienteCarta = () => {
+        const cartaAleatoria = generarNumeroRandom();
+        const puntosCarta = valoresPuntos(cartaAleatoria);
+        
+        partida.puntosPartida += puntosCarta;
+        mostrarCarta(cartaAleatoria);
+        muestraPuntuacion();
+    
+        const estadoActual = comprobarEstadoPartida(partida.puntosPartida);
+    
+        muestraMensajeComprobacion(partida.puntosPartida, estadoActual);
+        habilitarBotones(false, false, true,false);
+      };
