@@ -10,7 +10,7 @@ export const iniciarPartida = () =>{
    }
 
 
-export const habilitarBotones = (dameCarta: boolean, mePlanto: boolean, nuevaPartida: boolean, siguienteCarta : boolean) => {
+const habilitarBotones = (dameCarta: boolean, mePlanto: boolean, nuevaPartida: boolean, siguienteCarta : boolean) => {
     const btnDameCarta = document.getElementById("btnDameCarta");
     const btnMePlanto = document.getElementById("btnMePlanto");
     const btnNuevaPartida = document.getElementById("btnNuevaPartida");
@@ -34,7 +34,7 @@ export const habilitarBotones = (dameCarta: boolean, mePlanto: boolean, nuevaPar
   
   };
 
-  export const muestraMensajeComprobacion = (puntosPartida: number, estado: Estado) => {
+  const muestraMensajeComprobacion = (puntosPartida: number, estado: Estado) => {
     const mensajeCompleto: string = textMensajeComprobacion(puntosPartida, estado);
     const elementoResultado = document.getElementById("resultado");
     if (elementoResultado !== null && elementoResultado instanceof HTMLElement) {
@@ -44,7 +44,7 @@ export const habilitarBotones = (dameCarta: boolean, mePlanto: boolean, nuevaPar
          }
     };
 
-    export const muestraPuntuacion = () => {
+    const muestraPuntuacion = () => {
         const elementoPuntuacion = document.getElementById("puntuacion");
         const textoPuntosTotales = "Puntos totales: ";
         if (elementoPuntuacion !== null && elementoPuntuacion instanceof HTMLElement) {
@@ -54,14 +54,9 @@ export const habilitarBotones = (dameCarta: boolean, mePlanto: boolean, nuevaPar
            }
       };
 
-      export const actualizarPuntuacion = (puntos: number) => {
-        const puntuacionDiv = document.getElementById("puntuacion");
-        if (puntuacionDiv !== null && puntuacionDiv instanceof HTMLElement) {
-          puntuacionDiv.textContent = `Carta Obtenida: ${puntos}`;
-        }
-      };
+    
 
-      export const mostrarCarta = (carta: number): void => {
+      const mostrarCarta = (carta: number): void => {
         const imagenCarta = document.getElementById("cartaMostrada");
         if (imagenCarta !== null && imagenCarta instanceof HTMLImageElement) {
           const urlCarta = obtenerURLCarta(carta);
@@ -69,7 +64,7 @@ export const habilitarBotones = (dameCarta: boolean, mePlanto: boolean, nuevaPar
         }
       };
 
-      export const actualizarElementoResultado = () =>{
+    const actualizarElementoResultado = () =>{
         const elementoResultado = document.getElementById("resultado");
       if (elementoResultado) {
         elementoResultado.innerHTML = "";
