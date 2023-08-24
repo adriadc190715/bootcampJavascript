@@ -1,39 +1,5 @@
-import { Estado,partida} from "./modelo";
-import { comprobarEstadoPartida, comprobarSuma, textMensajeComprobacion } from "./motor";
-import {vi} from "vitest";
 
-describe("comprobarSuma", () => {
-    it("debería devolver WINER_HAS_GANADO si el valor obtenido es igual a 7.5", () => {
-      // Arrange
-      const valorSuma : number  = 7.5;
-  
-      // Act
-      const resultado =comprobarSuma(valorSuma);
-  
-      // Assert
-      expect(resultado).toBe("WINER_HAS_GANADO");
-    });
-    it("debería devolver SIGUE_JUGANDO si el valor obtenido es menor a 7.5", () => {
-        // Arrange
-        const valorSuma : number  = 3;
-    
-        // Act
-        const resultado =comprobarSuma(valorSuma);
-    
-        // Assert
-        expect(resultado).toBe("SIGUE_JUGANDO");
-      });
-      it("debería devolver GAME_OVER_TE_HAS_PASADO si el valor obtenido es mayor a 7.5", () => {
-        // Arrange
-        const valorSuma : number  = 10;
-    
-        // Act
-        const resultado =comprobarSuma(valorSuma)
-    
-        // Assert
-        expect(resultado).toBe("GAME_OVER_TE_HAS_PASADO");
-      });
-  });
+import { comprobarEstadoPartida,dameCarta} from "./motor";
 
   describe("comprobarEstadoPartida", () => {
     it("debería devolver WINER_HAS_GANADO si  los puntosTotales = 7.5 ", () => {
@@ -67,52 +33,38 @@ describe("comprobarSuma", () => {
         expect(resultado).toBe("GAME_OVER_TE_HAS_PASADO");
       });
   });
-
-  describe("textMensajeComprobacion", () => {
-    it("deberia devolver El número ${puntosPartida} has acertado si puntosPartida = 7.5 ", () => {
+  describe("dameCarta", () => {
+    it("debería devolver numeroRandom +1, si numeroRandom sale 0", () => {
       // Arrange
-      const valorPartida: number = 7.5
-      const estado : Estado = "WINER_HAS_GANADO";
-      vi.spyOn(partida,"puntosPartida","get").mockReturnValue(7.5);
       
-      const resultadoEsperado: string = textMensajeComprobacion(partida.puntosPartida, estado);
+      const cartaAleatoria :number = 0
   
       // Act
-      const resultado : string  = textMensajeComprobacion(valorPartida,estado);
-      
+      const resultado = dameCarta(cartaAleatoria)
+  
       // Assert
-      expect(resultado).toBe(resultadoEsperado)
-    
+      expect(resultado).toBe(cartaAleatoria+1);
     });
-    it("deberia devolver ${puntosPartida} no has llegado, prueba otra vez si puntosPartida < 7.5 ", () => {
-        // Arrange
-        const valorPartida: number = 4.5
-        const estado : Estado = "SIGUE_JUGANDO";
-        vi.spyOn(partida,"puntosPartida","get").mockReturnValue(4.5);
-        
-        const resultadoEsperado: string = textMensajeComprobacion(partida.puntosPartida, estado);
+    it("debería devolver numeroRandon +2, si numeroRandom sale >7", () => {
+      // Arrange
     
-        // Act
-        const resultado : string  = textMensajeComprobacion(valorPartida,estado);
-        
-        // Assert
-        expect(resultado).toBe(resultadoEsperado)
-      
-      });
-      it("deberia devolver ¡GAME OVER! Te pasaste ${puntosPartida} SE ACABO EL JUEGO. si puntosPartida > 7.5 ", () => {
-        // Arrange
-        const valorPartida: number = 10.5
-        const estado : Estado = "GAME_OVER_TE_HAS_PASADO";
-        vi.spyOn(partida,"puntosPartida","get").mockReturnValue(10.5);
-        
-        const resultadoEsperado: string = textMensajeComprobacion(partida.puntosPartida, estado);
-    
-        // Act
-        const resultado : string  = textMensajeComprobacion(valorPartida,estado);
-        
-        // Assert
-        expect(resultado).toBe(resultadoEsperado)
-      
-      });
-      
+      const cartaAleatoria :number = 8
+      // Act
+      const resultado = dameCarta(cartaAleatoria)  
+
+      // Assert
+      expect(resultado).toBe(cartaAleatoria+2);
+    });
+    it("debería devolver el numeroRandom, si numeroRandom sale <=7", () => {
+      // Arrange
+      const cartaAleatoria :number = 5
+      // Act
+      const resultado = dameCarta(cartaAleatoria) 
+      // Assert
+      expect(resultado).toBe(cartaAleatoria);
+    });
+
   });
+ 
+      
+
