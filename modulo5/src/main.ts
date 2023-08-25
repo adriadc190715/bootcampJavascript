@@ -253,8 +253,8 @@ if (btnNuevaPartida !== null && btnNuevaPartida !== undefined && btnNuevaPartida
  
 const siguienteCarta = () => {
     const cartaAleatoria = generarNumeroRandom();
-    mostrarCarta(cartaAleatoria);
     sumarPuntosPartida(cartaAleatoria);
+    mostrarCarta(cartaAleatoria);
     const estadoActual = comprobarEstadoPartida(puntosPartida);
     muestraMensajeComprobacion(puntosPartida, estadoActual);
     habilitarBotones(false, false, true,false);
