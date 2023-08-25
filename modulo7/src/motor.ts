@@ -1,4 +1,4 @@
-import {Estado} from './modelo'
+import {Estado,partida} from './modelo'
 
 
 export const textMensajeComprobacion = (puntosPartida: number, estado: Estado): string => {
@@ -46,11 +46,16 @@ export const textMensajeComprobacion = (puntosPartida: number, estado: Estado): 
   }
 
   
- export function valoresPuntos(carta: number): number {
+ function valoresPuntos(carta: number): number {
     const valorCarta: number = carta <= 7 ? carta : 0.5;
   
     return valorCarta;
   }
+
+  export const sumarPuntosPartida = (carta: number): void => {
+    const puntosCarta = valoresPuntos(carta);
+    partida.puntosPartida += puntosCarta;
+    };
  
   export const comprobarSuma = (suma: number): Estado => {
     if (suma < 7.5) {

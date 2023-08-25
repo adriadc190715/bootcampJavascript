@@ -1,4 +1,4 @@
-import {textMensajeComprobacion,generarNumeroRandom,comprobarEstadoPartida,comprobarSuma,valoresPuntos,dameCarta} from './motor';
+import {textMensajeComprobacion,generarNumeroRandom,comprobarEstadoPartida,comprobarSuma,dameCarta,sumarPuntosPartida} from './motor';
 import {Estado,partida} from './modelo';
 
 export const iniciarPartida = () =>{
@@ -127,15 +127,12 @@ const habilitarBotones = (dameCarta: boolean, mePlanto: boolean, nuevaPartida: b
 
    return `https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/${nombreImagen}`;
  };
-
+   
 
       export const handleClickDameCarta = () => {
         const numeroRandom = generarNumeroRandom();
         const cartaAleatoria = dameCarta(numeroRandom);
-        const puntosCarta = valoresPuntos(cartaAleatoria);
-        
-      
-        partida.puntosPartida += puntosCarta;
+        sumarPuntosPartida(cartaAleatoria);
         muestraPuntuacion();
         mostrarCarta(cartaAleatoria);
         const estadoActual = comprobarEstadoPartida(partida.puntosPartida);
@@ -161,10 +158,9 @@ const habilitarBotones = (dameCarta: boolean, mePlanto: boolean, nuevaPartida: b
     
       export const siguienteCarta = () => {
         const cartaAleatoria = generarNumeroRandom();
-        const puntosCarta = valoresPuntos(cartaAleatoria);
-        partida.puntosPartida += puntosCarta;
-        mostrarCarta(cartaAleatoria);
+        sumarPuntosPartida(cartaAleatoria);
         muestraPuntuacion();
+        mostrarCarta(cartaAleatoria);
         const estadoActual = comprobarEstadoPartida(partida.puntosPartida);
         muestraMensajeComprobacion(partida.puntosPartida, estadoActual);
         habilitarBotones(false, false, true,false);

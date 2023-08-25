@@ -66,5 +66,15 @@ import { comprobarEstadoPartida,dameCarta} from "./motor";
 
   });
  
+  describe("sumarPuntospartida", () => {
+    it("should pass spec", () => {
+      // Arrange
+  
+      // Act
+  
+      // Assert
+      expect(true).toBeTruthy();
+    });
+  });
       
 
