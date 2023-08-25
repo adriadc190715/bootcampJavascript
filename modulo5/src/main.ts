@@ -195,12 +195,17 @@ const mePlanto = (suma: number): string => {
   }
 };
 
+
+const sumarPuntosPartida = (carta: number): void => {
+  const puntosCarta = valoresPuntos(carta);
+  puntosPartida += puntosCarta;
+  muestraPuntuacion();
+};
+
 const handleClickDameCarta = () => {
   const numeroRandom = generarNumeroRandom();
   const cartaAleatoria = dameCarta(numeroRandom);
-  const puntosCarta = valoresPuntos(cartaAleatoria);
-  puntosPartida += puntosCarta;
-  muestraPuntuacion();
+  sumarPuntosPartida(cartaAleatoria);
   mostrarCarta(cartaAleatoria);
   const estadoActual = comprobarEstadoPartida(puntosPartida);
   muestraMensajeComprobacion(puntosPartida, estadoActual);
@@ -248,14 +253,9 @@ if (btnNuevaPartida !== null && btnNuevaPartida !== undefined && btnNuevaPartida
  
 const siguienteCarta = () => {
     const cartaAleatoria = generarNumeroRandom();
-    const puntosCarta = valoresPuntos(cartaAleatoria);
-    
-    puntosPartida += puntosCarta;
     mostrarCarta(cartaAleatoria);
-    muestraPuntuacion();
-
+    sumarPuntosPartida(cartaAleatoria);
     const estadoActual = comprobarEstadoPartida(puntosPartida);
-
     muestraMensajeComprobacion(puntosPartida, estadoActual);
     habilitarBotones(false, false, true,false);
   };
