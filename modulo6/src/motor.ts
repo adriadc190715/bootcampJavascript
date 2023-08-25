@@ -1,6 +1,7 @@
 import {Estado} from './modelo'
 
 
+
 export const textMensajeComprobacion = (puntosPartida: number, estado: Estado): string => {
     switch (estado) {
       case "SIGUE_JUGANDO":
@@ -75,5 +76,6 @@ export const textMensajeComprobacion = (puntosPartida: number, estado: Estado): 
       return "Algo ha ido mal al plantarte";
     }
   };
+
 
   

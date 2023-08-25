@@ -44,7 +44,7 @@ const habilitarBotones = (dameCarta: boolean, mePlanto: boolean, nuevaPartida: b
          }
     };
 
-    const muestraPuntuacion = () => {
+    export const muestraPuntuacion = () => {
         const elementoPuntuacion = document.getElementById("puntuacion");
         const textoPuntosTotales = "Puntos totales: ";
         if (elementoPuntuacion !== null && elementoPuntuacion instanceof HTMLElement) {
@@ -132,11 +132,7 @@ const habilitarBotones = (dameCarta: boolean, mePlanto: boolean, nuevaPartida: b
       export const handleClickDameCarta = () => {
         const numeroRandom = generarNumeroRandom();
         const cartaAleatoria = dameCarta(numeroRandom);
-        const puntosCarta = valoresPuntos(cartaAleatoria);
-        
-      
-        partida.puntosPartida += puntosCarta;
-        muestraPuntuacion();
+        sumarPuntosPartida(cartaAleatoria);
         mostrarCarta(cartaAleatoria);
         const estadoActual = comprobarEstadoPartida(partida.puntosPartida);
         muestraMensajeComprobacion(partida.puntosPartida, estadoActual);
@@ -161,11 +157,15 @@ const habilitarBotones = (dameCarta: boolean, mePlanto: boolean, nuevaPartida: b
     
       export const siguienteCarta = () => {
         const cartaAleatoria = generarNumeroRandom();
-        const puntosCarta = valoresPuntos(cartaAleatoria);
-        partida.puntosPartida += puntosCarta;
         mostrarCarta(cartaAleatoria);
-        muestraPuntuacion();
+        sumarPuntosPartida(cartaAleatoria);
         const estadoActual = comprobarEstadoPartida(partida.puntosPartida);
         muestraMensajeComprobacion(partida.puntosPartida, estadoActual);
         habilitarBotones(false, false, true,false);
       };
+      
+  const sumarPuntosPartida = (carta: number): void => {
+    const puntosCarta = valoresPuntos(carta);
+    partida.puntosPartida += puntosCarta;
+    muestraPuntuacion();
+  };
