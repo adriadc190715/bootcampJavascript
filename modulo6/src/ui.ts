@@ -157,8 +157,8 @@ const habilitarBotones = (dameCarta: boolean, mePlanto: boolean, nuevaPartida: b
     
       export const siguienteCarta = () => {
         const cartaAleatoria = generarNumeroRandom();
-        mostrarCarta(cartaAleatoria);
         sumarPuntosPartida(cartaAleatoria);
+        mostrarCarta(cartaAleatoria);
         const estadoActual = comprobarEstadoPartida(partida.puntosPartida);
         muestraMensajeComprobacion(partida.puntosPartida, estadoActual);
         habilitarBotones(false, false, true,false);
