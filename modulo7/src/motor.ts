@@ -52,7 +52,7 @@ export const textMensajeComprobacion = (puntosPartida: number, estado: Estado): 
     return valorCarta;
   }
 
-  export const sumarPuntosPartida = (carta: number): void => {
+  export const sumarPuntosPartida = (carta: number):void => {
     const puntosCarta = valoresPuntos(carta);
     partida.puntosPartida += puntosCarta;
     };

@@ -1,5 +1,7 @@
 
-import { comprobarEstadoPartida,dameCarta} from "./motor";
+import { comprobarEstadoPartida,dameCarta,sumarPuntosPartida} from "./motor";
+import {partida}from "./modelo";
+
 
   describe("comprobarEstadoPartida", () => {
     it("debería devolver WINER_HAS_GANADO si  los puntosTotales = 7.5 ", () => {
@@ -63,18 +65,49 @@ import { comprobarEstadoPartida,dameCarta} from "./motor";
       // Assert
       expect(resultado).toBe(cartaAleatoria);
     });
+    describe("sumarPuntosPartida", () => {
+      it("debería dar 7 si partimos de 5 y nos sale 2", () => {
+          // Arrange
+          const carta = 2;
+          partida.puntosPartida = 5; 
+  
+          // Act
+          sumarPuntosPartida(carta);
+  
+          // Assert
+          expect(partida.puntosPartida).toBe(7); 
+      });
+      it("debería dar 5 si partimos de 3 y nos sale 2", () => {
+        // Arrange
+        const carta = 2;
+        partida.puntosPartida = 3; 
+
+        // Act
+        sumarPuntosPartida(carta);
+
+        // Assert
+        expect(partida.puntosPartida).toBe(5); 
+    });
+    it("debería dar 12 si partimos de 7 y nos sale 5", () => {
+      // Arrange
+      const carta = 5;
+      partida.puntosPartida = 7; 
+
+      // Act
+      sumarPuntosPartida(carta);
+
+      // Assert
+      expect(partida.puntosPartida).toBe(12); 
+  });
+  });
 
   });
+
+
+
  
-  describe("sumarPuntospartida", () => {
-    it("should pass spec", () => {
-      // Arrange
-  
-      // Act
-  
-      // Assert
-      expect(true).toBeTruthy();
-    });
-  });
-      
+
+
+
+ 
 
